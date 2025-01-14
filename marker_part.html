@@ -1,0 +1,57 @@
+<a-scene
+        vr-mode-ui="enabled: false"
+        arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
+        click-detector
+>
+  <a-assets>
+    <a-asset-item id="Mcqueen" src="assets/mcqueen/scene.gltf" />
+    <a-asset-item id="Knuckles" src="assets/knuckles/scene.gltf" />
+  </a-assets>
+
+  <a-marker
+          type="pattern"
+          url="assets/marker/pattern-mcqueen.patt"
+          clickable="https://www.pokewiki.de/Magnetilo"
+  >
+    <a-gltf-model
+            src="#mcqueen"
+            scale="0.5 0.5 0.5"
+            rotation="0 180 0"
+            position="0 0.5 0"
+    ></a-gltf-model>
+
+    <a-entity
+            geometry="primitive: plane; width: 1; height: 0.5;"
+            text="value: Lightning McQueen [Tap for more info]; color: black;"
+            material="color: white"
+            position="0 0.3 0"
+    ></a-entity>
+  </a-marker>
+
+  <a-marker
+          type="pattern"
+          url="assets/marker/pattern-knuckles3.patt"
+          clickable="https://www.pokewiki.de/Magnetilo"
+  >
+    <a-gltf-model
+            src="#knuckles"
+            scale="1 1 1"
+            rotation="0 180 0"
+            position="0 0.5 0"
+    ></a-gltf-model>
+
+    <a-entity
+            geometry="primitive: plane; width: 1; height: 0.5;"
+            text="value: Knuckles [Tap for more info]; color: black;"
+            material="color: white"
+            position="0 0.3 0"
+    ></a-entity>
+  </a-marker>
+
+
+  <a-entity
+          camera
+          cursor="rayOrigin: mouse; fuse: true; fuseTimeout: 0;"
+          raycaster="objects: [clickable];"
+  ></a-entity>
+</a-scene>
