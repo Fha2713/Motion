@@ -98,3 +98,23 @@ AFRAME.registerComponent("click-detector", {
     link && window.open(link, "_blank");
   },
 });
+
+// Function to load additional HTML content dynamically
+function loadHtmlContent(url, targetElementId) {
+  fetch(url)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Failed to load ${url}: ${response.statusText}`);
+        }
+        return response.text();
+      })
+      .then((html) => {
+        document.getElementById(targetElementId).innerHTML = html;
+      })
+      .catch((error) => {
+        console.error("Error loading HTML content:", error);
+      });
+}
+
+// Dynamically load marker.html into the main content area
+loadHtmlContent("marker.html", "main");
