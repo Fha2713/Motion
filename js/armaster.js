@@ -155,8 +155,6 @@ ensureOnMarkerPage();
 
 AFRAME.registerComponent("click-detector", {
   init: function () {
-    this.currentMarker = null;
-
     this.handleTap = this.handleTap.bind(this);
 
     this.el.addEventListener("click", this.handleTap);
@@ -164,6 +162,9 @@ AFRAME.registerComponent("click-detector", {
   },
   handleTap: function (e) {
     const link = e.target.getAttribute("clickable");
-    link && window.open(link, "_blank");
+    if (link) {
+      window.open(link, "_blank");
+    }
   },
 });
+
