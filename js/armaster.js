@@ -91,6 +91,7 @@ AFRAME.registerComponent("click-detector", {
   },
   handleMarkerLost: function () {
     this.currentMarker = null;
+    console.log("Marker lost.");
   },
   handleTap: function (e) {
     const link = this.currentMarker
@@ -99,3 +100,55 @@ AFRAME.registerComponent("click-detector", {
     link && window.open(link, "_blank");
   },
 });
+
+// Function to ensure marker is recognized
+function ensureMarkerRecognition(markerSelector, timeout = 5000) {
+  return new Promise((resolve, reject) => {
+    const marker = document.querySelector(markerSelector);
+
+    if (!marker) {
+      reject(new Error(`Marker with selector '${markerSelector}' not found.`));
+      return;
+    }
+
+    let isRecognized = false;
+
+    function onMarkerFound() {
+      isRecognized = true;
+      clearTimeout(timer);
+      marker.removeEventListener("markerFound", onMarkerFound);
+      resolve(true);
+      console.log("Marker successfully recognized.");
+    }
+
+    const timer = setTimeout(() => {
+      if (!isRecognized) {
+        marker.removeEventListener("markerFound", onMarkerFound);
+        reject(new Error("Marker recognition timed out."));
+        console.error("Failed to recognize marker within timeout.");
+      }
+    }, timeout);
+
+    marker.addEventListener("markerFound", onMarkerFound);
+  });
+}
+
+// Example usage of ensureMarkerRecognition
+ensureMarkerRecognition("a-marker").then(() => {
+  console.log("Marker recognition confirmed.");
+}).catch((error) => {
+  console.error(error.message);
+});
+
+// Function to ensure the current HTML is marker.html
+function ensureOnMarkerPage() {
+  const currentPath = window.location.pathname;
+  if (!currentPath.includes("marker.html")) {
+    console.warn("You are not on the marker.html page.");
+  } else {
+    console.log("You are on the marker.html page.");
+  }
+}
+
+// Example usage of ensureOnMarkerPage
+ensureOnMarkerPage();
