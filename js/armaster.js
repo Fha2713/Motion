@@ -152,3 +152,18 @@ function ensureOnMarkerPage() {
 
 // Example usage of ensureOnMarkerPage
 ensureOnMarkerPage();
+
+AFRAME.registerComponent("click-detector", {
+  init: function () {
+    this.currentMarker = null;
+
+    this.handleTap = this.handleTap.bind(this);
+
+    this.el.addEventListener("click", this.handleTap);
+    this.el.addEventListener("touchstart", this.handleTap);
+  },
+  handleTap: function (e) {
+    const link = e.target.getAttribute("clickable");
+    link && window.open(link, "_blank");
+  },
+});
