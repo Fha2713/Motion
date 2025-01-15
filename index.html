@@ -6,10 +6,10 @@
 
   <title>AuRa</title>
 
-  <script src="js/aframe/aframe.min.js"></script>
-  <script src="js/aframe/aframe-ar.js"></script>
+  <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  <script src="https://raw.githack.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
   <script src="js/aframe/aframe-look-at-component.min.js"></script>
-  <script src="js/armaster.js"></script>
 
   <link rel="stylesheet" href="css/style.css" />
   <link href="https://fonts.googleapis.com/css2?family=MuseoModerno:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -26,7 +26,9 @@
   <a-scene
           embedded
           vr-mode-ui="enabled: false"
-          arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
+          rjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
+          renderer="logarithmicDepthBuffer: true;"
+          id="scene"
           click-detector
   >
     <a-assets>
@@ -34,17 +36,22 @@
     </a-assets>
 
     <a-marker
+            id="cars-marker"
             type="pattern"
+            preset="custom"
+            raycaster="objects: .clickable"
+            cursor="fuse: false; rayOrigin: mouse;"
             url="assets/marker.patt"
             clickable="https://www.pokewiki.de/Magnetilo"
     >
 
-      <a-gltf-model
-              src="#cars"
-              scale="0.5 0.5 0.5"
-              rotation="0 180 0"
-              position="0 0.5 0"
-      ></a-gltf-model>
+      <a-entity
+              id="cars-model"
+              scale="0.2809799481966904 0.2809799481966904 0.2809799481966904"
+              animation-mixer="loop: repeat"
+              gltf-model="#cars"
+              class="clickable"
+      ></a-entity>
 
       <a-entity
               geometry="primitive: plane; width: 1; height: 0.5;"
