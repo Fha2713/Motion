@@ -92,6 +92,24 @@
 
   </a-marker>
 
+  <a-marker
+          id="goat-marker"
+          type="pattern"
+          preset="custom"
+          url="assets/goat/goat-marker.patt"
+          emitevents="true"
+          clickable="https://fha2713.github.io/Motion/GOAT.mp4"
+
+  >
+    <a-entity
+            id="goat-model"
+            scale="0.4070116535299919 0.4070116535299919 0.4070116535299919"
+            animation-mixer="loop: repeat"
+            gltf-model="#goat-asset"
+            clickable="https://fha2713.github.io/Motion/GOAT.mp4"
+    ></a-entity>
+  </a-marker>
+
   <a-entity id="camera" camera></a-entity>
 </a-scene>
 
