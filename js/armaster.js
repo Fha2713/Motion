@@ -168,3 +168,7 @@ AFRAME.registerComponent("click-detector", {
   },
 });
 
+
+document.querySelector('#mcqueen-marker').addEventListener('click', () => {
+  window.location.href = 'https://en.wikipedia.org/wiki/Lightning_McQueen';
+});
