@@ -32,28 +32,26 @@
 >
   <a-assets>
     <a-asset-item
-            id="animated-asset"
-            src="assets/asset.gltf"
+            id="cars-asset"
+            src="assets/mcqueen/mcqueen.gltf"
     ></a-asset-item>
   </a-assets>
 
   <a-marker
-          id="animated-marker"
+          id="mcqueen-marker"
           type="pattern"
           preset="custom"
-          url="assets/marker.patt"
+          url="assets/mcqueen/mcqueen-marker.patt"
           raycaster="objects: .clickable"
           emitevents="true"
           cursor="fuse: false; rayOrigin: mouse;"
-          id="markerA"
   >
     <a-entity
-            id="bowser-model"
+            id="mcqueen-model"
             scale="0.2809799481966904 0.2809799481966904 0.2809799481966904"
             animation-mixer="loop: repeat"
             gltf-model="#animated-asset"
             class="clickable"
-            gesture-handler
     ></a-entity>
   </a-marker>
 
