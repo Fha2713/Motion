@@ -1,4 +1,59 @@
-let positionWatcher;
+let currentMode;
+
+const fullScreenDocument = document.documentElement;
+const mainElement = document.getElementById("main");
+const navBar = document.querySelector("nav");
+const fullScreenButton = document.getElementById("fullScreenButton");
+
+const modeToggle = document.getElementById("mode-toggle");
+
+
+// errors if navigation is unavailable
+function showError(error) {
+  switch (error.code) {
+    case error.PERMISSION_DENIED:
+      alert(
+          "User denied the request for Geolocation. Application won't work properly."
+      );
+      break;
+    case error.POSITION_UNAVAILABLE:
+      alert("Location information is unavailable.");
+      break;
+    case error.TIMEOUT:
+      alert("The request to get location timed out.");
+      break;
+    case error.UNKNOWN_ERROR:
+      alert("An unknown error occurred.");
+      break;
+  }
+}
+
+// function to switch between indoor and outdoor mode
+function switchMode(mode) {
+  console.log(`Switch: ${mode}`);
+  let arDoc;
+
+  if (mode == OUTDOOR) {
+    arDoc = "location_part.html";
+    modeToggle.checked = false;
+  } else {
+    arDoc = "marker_part.html";
+    modeToggle.checked = true;
+  }
+
+  currentMode = mode;
+  localStorage.setItem("lastMode", mode);
+
+  fetch(arDoc)
+      .then((response) => response.text())
+      .then((html) => {
+        mainElement.innerHTML = html;
+        const video = document.querySelector("video");
+
+        video && video.remove();
+      });
+}
+
 
 // Functions to handle Fullscreen
 function fullscreenEnabled() {
@@ -10,16 +65,13 @@ function fullscreenEnabled() {
 }
 
 function handleFullscreenChange() {
-  const navBar = document.querySelector("nav");
   fullscreenEnabled()
       ? (navBar.style.display = "none")
       : (navBar.style.display = "block");
 }
 
-const fullScreenButton = document.getElementById("fullScreenButton");
 if (fullScreenButton) {
   fullScreenButton.addEventListener("click", () => {
-    const fullScreenDocument = document.documentElement;
     if (fullscreenEnabled()) {
       if (document.exitFullscreen) {
         document.exitFullscreen();
@@ -32,8 +84,10 @@ if (fullScreenButton) {
       if (fullScreenDocument.requestFullscreen) {
         fullScreenDocument.requestFullscreen();
       } else if (fullScreenDocument.webkitRequestFullscreen) {
+        /* Safari */
         fullScreenDocument.webkitRequestFullscreen();
       } else if (fullScreenDocument.msRequestFullscreen) {
+        /* IE11 */
         fullScreenDocument.msRequestFullscreen();
       }
     }
@@ -45,24 +99,6 @@ document.addEventListener("mozfullscreenchange", handleFullscreenChange);
 document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
 document.addEventListener("msfullscreenchange", handleFullscreenChange);
 
-// register AFRAME component that logs coordinates for debugging
-AFRAME.registerComponent("log-coordinates", {
-  init: function () {
-    if (navigator.geolocation) {
-      navigator.geolocation.watchPosition((position) => {
-        console.log(
-            `Geolocation API Coordinates\nLatitude: ${position.coords.latitude}, Longitude: ${position.coords.longitude}`
-        );
-        console.log(`Geolocation API Accuracy: ${position.coords.accuracy}`);
-      });
-    } else {
-      console.log("Geolocation API is not supported by this browser.");
-    }
-  },
-  remove: function () {
-    navigator.geolocation.clearWatch(positionWatcher);
-  },
-});
 
 // registering an AFRAME component for handling clicks on AR elements
 AFRAME.registerComponent("click-detector", {
@@ -98,23 +134,3 @@ AFRAME.registerComponent("click-detector", {
     link && window.open(link, "_blank");
   },
 });
-
-// Function to load additional HTML content dynamically
-function loadHtmlContent(url, targetElementId) {
-  fetch(url)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Failed to load ${url}: ${response.statusText}`);
-        }
-        return response.text();
-      })
-      .then((html) => {
-        document.getElementById(targetElementId).innerHTML = html;
-      })
-      .catch((error) => {
-        console.error("Error loading HTML content:", error);
-      });
-}
-
-// Dynamically load marker.html into the main content area
-loadHtmlContent("marker.html", "main");
