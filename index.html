@@ -55,6 +55,31 @@
     ></a-entity>
   </a-marker>
 
+    <a-assets>
+      <a-asset-item
+              id="knuckles-asset"
+              src="assets/knuckles/knuckles.gltf"
+      ></a-asset-item>
+    </a-assets>
+
+    <a-marker
+            id="knuckles-marker"
+            type="pattern"
+            preset="custom"
+            url="assets/knuckles/knuckles-marker.patt"
+            raycaster="objects: .clickable"
+            emitevents="true"
+            cursor="fuse: false; rayOrigin: mouse;"
+    >
+      <a-entity
+              id="knuckles-model"
+              scale="0.00003032120668279684 0.00003032120668279684 0.00003032120668279684"
+              animation-mixer="loop: repeat"
+              gltf-model="#knuckles-asset"
+              class="clickable"
+      ></a-entity>
+    </a-marker>
+
   <a-entity camera></a-entity>
 </a-scene>
 
