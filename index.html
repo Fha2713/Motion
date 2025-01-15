@@ -28,6 +28,7 @@
         renderer="logarithmicDepthBuffer: true;"
         arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
         id="scene"
+        click-detector
         embedded
 >
   <a-assets>
@@ -49,6 +50,7 @@
           raycaster="objects: .clickable"
           emitevents="true"
           cursor="fuse: false; rayOrigin: mouse;"
+          clickable="https://en.wikipedia.org/wiki/Lightning_McQueen"
   >
     <a-entity
             id="mcqueen-model"
@@ -80,15 +82,21 @@
     ></a-entity>
 
     <a-entity
-            geometry="primitive: plane; height: 0.5; width: 2;"
-            material="color: white; opacity: 0.8;"
-            position="0 1.5 0"
-            text="value: Do you know da wae; color: black; align: center; width: 2;"
+            geometry="primitive: plane; width: 50; height: 0;"
+            text="value: \nDo you know da wae \n
+                [Tap to see more information]\n\n;
+            color: black; zOffset: 0.9; xOffset: 0.9;"
+            material="color: white"
+            position="0 -10 0"
     ></a-entity>
 
   </a-marker>
 
-  <a-entity id="camera" camera></a-entity>
+  <a-entity
+          camera
+          cursor="rayOrigin: mouse; fuse: true; fuseTimeout: 0;"
+          raycaster="objects: [clickable];"
+  ></a-entity>
 </a-scene>
 
 <div class="loader-wrapper"><div class="loader"></div></div>
