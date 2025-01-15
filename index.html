@@ -35,6 +35,10 @@
             id="mcqueen-asset"
             src="assets/mcqueen/mcqueen.gltf"
     ></a-asset-item>
+    <a-asset-item
+            id="knuckles-asset"
+            src="assets/knuckles/knuckles.gltf"
+    ></a-asset-item>
   </a-assets>
 
   <a-marker
@@ -52,35 +56,36 @@
             animation-mixer="loop: repeat"
             gltf-model="#mcqueen-asset"
             class="clickable"
+            event-set__click="_target: _blank; _type: location; _url: https://en.wikipedia.org/wiki/Lightning_McQueen;"
     ></a-entity>
   </a-marker>
 
-    <a-assets>
-      <a-asset-item
-              id="knuckles-asset"
-              src="assets/knuckles/knuckles.gltf"
-      ></a-asset-item>
-    </a-assets>
+  <a-marker
+          id="knuckles-marker"
+          type="pattern"
+          preset="custom"
+          url="assets/knuckles/knuckles-marker.patt"
+          raycaster="objects: .clickable"
+          emitevents="true"
+          cursor="fuse: false; rayOrigin: mouse;"
+  >
+    <a-entity
+            id="knuckles-model"
+            scale="0.00003032120668279684 0.00003032120668279684 0.00003032120668279684"
+            animation-mixer="loop: repeat"
+            gltf-model="#knuckles-asset"
+            look-at="#camera"
+    ></a-entity>
+    <a-text
+            value="Do you know da wae"
+            position="0 0.5 0"
+            scale="2 2 2"
+            color="#ff0000"
+            align="center"
+    ></a-text>
+  </a-marker>
 
-    <a-marker
-            id="knuckles-marker"
-            type="pattern"
-            preset="custom"
-            url="assets/knuckles/knuckles-marker.patt"
-            raycaster="objects: .clickable"
-            emitevents="true"
-            cursor="fuse: false; rayOrigin: mouse;"
-    >
-      <a-entity
-              id="knuckles-model"
-              scale="0.00003032120668279684 0.00003032120668279684 0.00003032120668279684"
-              animation-mixer="loop: repeat"
-              gltf-model="#knuckles-asset"
-              class="clickable"
-      ></a-entity>
-    </a-marker>
-
-  <a-entity camera></a-entity>
+  <a-entity id="camera" camera></a-entity>
 </a-scene>
 
 <div class="loader-wrapper"><div class="loader"></div></div>
