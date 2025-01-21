@@ -49,19 +49,3 @@ document.querySelector('#goat-marker').addEventListener('click', () => {
 });
 
 
-document.getElementById('fullScreenButton').addEventListener('click', () => {
-  const view = document.getElementById('view'); // The <body> element with id="view"
-
-  if (!document.fullscreenElement) {
-    // Request fullscreen mode
-    view.requestFullscreen()
-        .then(() => console.log('Entered fullscreen mode'))
-        .catch(err => console.error(`Error entering fullscreen: ${err}`));
-  } else {
-    // Exit fullscreen mode
-    document.exitFullscreen()
-        .then(() => console.log('Exited fullscreen mode'))
-        .catch(err => console.error(`Error exiting fullscreen: ${err}`));
-  }
-});
-
