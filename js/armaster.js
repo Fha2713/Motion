@@ -52,6 +52,7 @@ document.addEventListener("msfullscreenchange", handleFullscreenChange);
 AFRAME.registerComponent("click-detector", {
   init: function () {
     this.currentMarker = null;
+    this.lock = false;
 
     this.handleMarkerFound = this.handleMarkerFound.bind(this);
     this.handleMarkerLost = this.handleMarkerLost.bind(this);
