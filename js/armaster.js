@@ -8,7 +8,8 @@ function fullscreenEnabled() {
   return !!(
       document.fullscreenElement ||
       document.webkitFullscreenElement ||
-      document.msFullscreenElement
+      document.msFullscreenElement ||
+      document.mozFullScreenElement
   );
 }
 
@@ -20,6 +21,8 @@ function toggleFullscreen() {
       document.webkitExitFullscreen();
     } else if (document.msExitFullscreen) {
       document.msExitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
     }
   } else {
     if (fullScreenDocument.requestFullscreen) {
@@ -28,22 +31,32 @@ function toggleFullscreen() {
       fullScreenDocument.webkitRequestFullscreen();
     } else if (fullScreenDocument.msRequestFullscreen) {
       fullScreenDocument.msRequestFullscreen();
+    } else if (fullScreenDocument.mozRequestFullScreen) {
+      fullScreenDocument.mozRequestFullScreen();
     }
   }
 }
 
 function handleFullscreenChange() {
-  navBar.style.display = fullscreenEnabled() ? "none" : "block";
+  if (navBar) {
+    navBar.style.display = fullscreenEnabled() ? "none" : "block";
+  }
 }
 
 if (fullScreenButton) {
   fullScreenButton.addEventListener("click", toggleFullscreen);
 }
 
+// Add event listeners for fullscreen change across different browsers
 document.addEventListener("fullscreenchange", handleFullscreenChange);
-document.addEventListener("mozfullscreenchange", handleFullscreenChange);
 document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
-document.addEventListener("msfullscreenchange", handleFullscreenChange);
+document.addEventListener("mozfullscreenchange", handleFullscreenChange);
+document.addEventListener("MSFullscreenChange", handleFullscreenChange);
+
+// Additional debugging to ensure the button is found and clickable
+if (!fullScreenButton) {
+  console.error("Fullscreen button not found. Ensure it exists in the HTML with the correct ID.");
+}
 
 
 // A-Frame Components
@@ -82,6 +95,17 @@ AFRAME.registerComponent("click-detector", {
 });
 
 
+
 document.querySelector('#mcqueen-marker').addEventListener('click', () => {
   window.location.href = 'https://en.wikipedia.org/wiki/Lightning_McQueen';
+});
+
+
+document.querySelector('#knuckles-marker').addEventListener('click', () => {
+  window.location.href = 'https://www.youtube.com/watch?v=VcRz9EMC-Y0';
+});
+
+
+document.querySelector('#goat-marker').addEventListener('click', () => {
+  window.location.href = 'https://fha2713.github.io/Motion/GOAT.mp4';
 });
