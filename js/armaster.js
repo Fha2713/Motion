@@ -1,9 +1,9 @@
 // Define constants
-const fullScreenDocument = document.documentElement; // Target the scene specifically
+const fullScreenDocument = document.getElementById("scene"); // Target the scene specifically
 const navBar = document.querySelector("nav");
 const fullScreenButton = document.getElementById("fullScreenButton");
 
-// Functions to handle Fullscreen
+
 function fullscreenEnabled() {
   return !!(
       document.fullscreenElement ||
