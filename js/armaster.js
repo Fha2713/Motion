@@ -1,9 +1,10 @@
-const fullScreenDocument = document.documentElement;
-const scene = document.getElementById("scene");
+
+const fullScreenDocument = document.getElementById("scene");
 const navBar = document.querySelector("nav");
 const fullScreenButton = document.getElementById("fullScreenButton");
 
-// Functions to handle Fullscreen
+
+// Funktion, um Fullscreen zu überprüfen
 function fullscreenEnabled() {
   return !!(
       document.fullscreenElement ||
@@ -18,29 +19,37 @@ function handleFullscreenChange() {
       : (navBar.style.display = "block");
 }
 
-if (fullScreenButton) {
-  fullScreenButton.addEventListener("click", () => {
-    if (fullscreenEnabled()) {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen();
-      } else if (document.msExitFullscreen) {
-        document.msExitFullscreen();
-      }
-    } else {
-      if (fullScreenDocument.requestFullscreen) {
-        fullScreenDocument.requestFullscreen();
-      } else if (fullScreenDocument.webkitRequestFullscreen) {
-        /* Safari */
-        fullScreenDocument.webkitRequestFullscreen();
-      } else if (fullScreenDocument.msRequestFullscreen) {
-        /* IE11 */
-        fullScreenDocument.msRequestFullscreen();
-      }
+
+// Funktion, um Fullscreen zu aktivieren oder zu deaktivieren
+function toggleFullscreen() {
+  if (fullscreenEnabled()) {
+    if (document.exitFullscreen) {
+      document.exitFullscreen().catch(err => console.error("Error exiting fullscreen:", err));
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
     }
-  });
+  } else {
+    if (fullScreenDocument.requestFullscreen) {
+      fullScreenDocument.requestFullscreen().catch(err => console.error("Error entering fullscreen:", err));
+    } else if (fullScreenDocument.webkitRequestFullscreen) {
+      fullScreenDocument.webkitRequestFullscreen();
+    } else if (fullScreenDocument.msRequestFullscreen) {
+      fullScreenDocument.msRequestFullscreen();
+    }
+  }
 }
+
+// Event-Listener für den Fullscreen-Button
+if (fullScreenButton) {
+  fullScreenButton.addEventListener("click", toggleFullscreen);
+}
+
+// Event-Listener für Fullscreen-Änderungen
+document.addEventListener("fullscreenchange", () => {
+  console.log("Fullscreen state changed");
+});
 
 document.addEventListener("fullscreenchange", handleFullscreenChange);
 document.addEventListener("mozfullscreenchange", handleFullscreenChange);
@@ -52,7 +61,6 @@ document.addEventListener("msfullscreenchange", handleFullscreenChange);
 AFRAME.registerComponent("click-detector", {
   init: function () {
     this.currentMarker = null;
-    this.lock = false;
 
     this.handleMarkerFound = this.handleMarkerFound.bind(this);
     this.handleMarkerLost = this.handleMarkerLost.bind(this);
