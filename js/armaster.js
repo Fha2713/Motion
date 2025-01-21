@@ -1,9 +1,9 @@
-// Define constants
-const fullScreenDocument = document.getElementById("scene"); // Target the A-Frame scene explicitly
+const fullScreenDocument = document.documentElement;
+const scene = document.getElementById("scene");
 const navBar = document.querySelector("nav");
 const fullScreenButton = document.getElementById("fullScreenButton");
 
-// Function to check if fullscreen is enabled
+// Functions to handle Fullscreen
 function fullscreenEnabled() {
   return !!(
       document.fullscreenElement ||
@@ -12,48 +12,41 @@ function fullscreenEnabled() {
   );
 }
 
-// Function to handle fullscreen changes
 function handleFullscreenChange() {
-  if (fullscreenEnabled()) {
-    navBar.style.display = "none"; // Hide navigation bar in fullscreen
-  } else {
-    navBar.style.display = "block"; // Show navigation bar when exiting fullscreen
-  }
+  fullscreenEnabled()
+      ? (navBar.style.display = "none")
+      : (navBar.style.display = "block");
 }
 
-// Function to toggle fullscreen mode
-function toggleFullscreen() {
-  if (fullscreenEnabled()) {
-    // Exit fullscreen mode
-    if (document.exitFullscreen) {
-      document.exitFullscreen().catch(err => console.error("Error exiting fullscreen:", err));
-    } else if (document.webkitExitFullscreen) {
-      document.webkitExitFullscreen();
-    } else if (document.msExitFullscreen) {
-      document.msExitFullscreen();
-    }
-  } else {
-    // Enter fullscreen mode
-    if (fullScreenDocument.requestFullscreen) {
-      fullScreenDocument.requestFullscreen().catch(err => console.error("Error entering fullscreen:", err));
-    } else if (fullScreenDocument.webkitRequestFullscreen) {
-      fullScreenDocument.webkitRequestFullscreen();
-    } else if (fullScreenDocument.msRequestFullscreen) {
-      fullScreenDocument.msRequestFullscreen();
-    }
-  }
-}
-
-// Attach click event to fullscreen button
 if (fullScreenButton) {
-  fullScreenButton.addEventListener("click", toggleFullscreen);
+  fullScreenButton.addEventListener("click", () => {
+    if (fullscreenEnabled()) {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+      }
+    } else {
+      if (fullScreenDocument.requestFullscreen) {
+        fullScreenDocument.requestFullscreen();
+      } else if (fullScreenDocument.webkitRequestFullscreen) {
+        /* Safari */
+        fullScreenDocument.webkitRequestFullscreen();
+      } else if (fullScreenDocument.msRequestFullscreen) {
+        /* IE11 */
+        fullScreenDocument.msRequestFullscreen();
+      }
+    }
+  });
 }
 
-// Add event listeners for fullscreen changes
 document.addEventListener("fullscreenchange", handleFullscreenChange);
-document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
 document.addEventListener("mozfullscreenchange", handleFullscreenChange);
+document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
 document.addEventListener("msfullscreenchange", handleFullscreenChange);
+
 
 // A-Frame Components
 AFRAME.registerComponent("click-detector", {
