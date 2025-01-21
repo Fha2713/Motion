@@ -1,11 +1,9 @@
-
-const fullScreenDocument = document.getElementById("scene");
+const sceneElement = document.getElementById("scene");
 const navBar = document.querySelector("nav");
 const fullScreenButton = document.getElementById("fullScreenButton");
 
-
-// Funktion, um Fullscreen zu überprüfen
-function fullscreenEnabled() {
+// Funktion, um den Fullscreen-Modus zu überprüfen
+function isFullscreenActive() {
   return !!(
       document.fullscreenElement ||
       document.webkitFullscreenElement ||
@@ -13,49 +11,42 @@ function fullscreenEnabled() {
   );
 }
 
-function handleFullscreenChange() {
-  fullscreenEnabled()
-      ? (navBar.style.display = "none")
-      : (navBar.style.display = "block");
-}
-
-
 // Funktion, um Fullscreen zu aktivieren oder zu deaktivieren
 function toggleFullscreen() {
-  if (fullscreenEnabled()) {
+  if (isFullscreenActive()) {
+    // Vollbildmodus verlassen
     if (document.exitFullscreen) {
-      document.exitFullscreen().catch(err => console.error("Error exiting fullscreen:", err));
+      document.exitFullscreen();
     } else if (document.webkitExitFullscreen) {
       document.webkitExitFullscreen();
     } else if (document.msExitFullscreen) {
       document.msExitFullscreen();
     }
   } else {
-    if (fullScreenDocument.requestFullscreen) {
-      fullScreenDocument.requestFullscreen().catch(err => console.error("Error entering fullscreen:", err));
-    } else if (fullScreenDocument.webkitRequestFullscreen) {
-      fullScreenDocument.webkitRequestFullscreen();
-    } else if (fullScreenDocument.msRequestFullscreen) {
-      fullScreenDocument.msRequestFullscreen();
+    // Vollbildmodus aktivieren
+    if (sceneElement.requestFullscreen) {
+      sceneElement.requestFullscreen();
+    } else if (sceneElement.webkitRequestFullscreen) {
+      sceneElement.webkitRequestFullscreen();
+    } else if (sceneElement.msRequestFullscreen) {
+      sceneElement.msRequestFullscreen();
     }
   }
 }
 
-// Event-Listener für den Fullscreen-Button
+// Event-Listener für Fullscreen-Wechsel
+document.addEventListener("fullscreenchange", () => {
+  if (isFullscreenActive()) {
+    navBar.style.display = "none"; // Navigation ausblenden
+  } else {
+    navBar.style.display = "flex"; // Navigation wieder anzeigen
+  }
+});
+
+// Fullscreen-Button aktivieren
 if (fullScreenButton) {
   fullScreenButton.addEventListener("click", toggleFullscreen);
 }
-
-// Event-Listener für Fullscreen-Änderungen
-document.addEventListener("fullscreenchange", () => {
-  console.log("Fullscreen state changed");
-});
-
-document.addEventListener("fullscreenchange", handleFullscreenChange);
-document.addEventListener("mozfullscreenchange", handleFullscreenChange);
-document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
-document.addEventListener("msfullscreenchange", handleFullscreenChange);
-
 
 // A-Frame Components
 AFRAME.registerComponent("click-detector", {
