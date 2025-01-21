@@ -1,26 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-
   <title>AuRa</title>
+
 
   <script src="js/aframe/aframe.min.js"></script>
   <script src="js/aframe/aframe-ar.js"></script>
   <script src="js/aframe/aframe-extras.loaders.js"></script>
   <script src="js/aframe/aframe-look-at-component.min.js"></script>
-  <script src="js/armaster.js"></script>
+
 
   <link rel="stylesheet" href="css/style.css" />
   <link href="https://fonts.googleapis.com/css2?family=MuseoModerno:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
+
 <body style="margin: 0; overflow: hidden;">
+
 <nav>
   <div class="navBar">
     <div class="navHeader">AuRa</div>
   </div>
 </nav>
+
 
 <a-scene
         vr-mode-ui="enabled: false;"
@@ -29,22 +33,15 @@
         arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
         id="scene"
         click-detector
-        embedded
->
+        embedded>
+
+
   <a-assets>
-    <a-asset-item
-            id="mcqueen-asset"
-            src="assets/mcqueen/mcqueen.gltf"
-    ></a-asset-item>
-    <a-asset-item
-            id="knuckles-asset"
-            src="assets/knuckles/knuckles.gltf"
-    ></a-asset-item>
-    <a-asset-item
-            id="goat-asset"
-            src="assets/goat/goat.gltf"
-    ></a-asset-item>
+    <a-asset-item id="mcqueen-asset" src="assets/mcqueen/mcqueen.gltf"></a-asset-item>
+    <a-asset-item id="knuckles-asset" src="assets/knuckles/knuckles.gltf"></a-asset-item>
+    <a-asset-item id="goat-asset" src="assets/goat/goat.gltf"></a-asset-item>
   </a-assets>
+
 
   <a-marker
           id="mcqueen-marker"
@@ -52,19 +49,17 @@
           preset="custom"
           url="assets/mcqueen/mcqueen-marker.patt"
           emitevents="true"
-          clickable="https://en.wikipedia.org/wiki/Lightning_McQueen"
+          clickable="https://en.wikipedia.org/wiki/Lightning_McQueen">
 
-  >
     <a-entity
             id="mcqueen-model"
             scale="0.5 0.5 0.5"
             animation-mixer="loop: repeat"
             gltf-model="#mcqueen-asset"
-            clickable="https://en.wikipedia.org/wiki/Lightning_McQueen"
-    ></a-entity>
-
-
+            clickable="https://en.wikipedia.org/wiki/Lightning_McQueen">
+    </a-entity>
   </a-marker>
+
 
   <a-marker
           id="knuckles-marker"
@@ -72,18 +67,18 @@
           preset="custom"
           url="assets/knuckles/knuckles-marker.patt"
           emitevents="true"
-          clickable="https://www.youtube.com/watch?v=VcRz9EMC-Y0"
-  >
+          clickable="https://www.youtube.com/watch?v=VcRz9EMC-Y0">
+
     <a-entity
             id="knuckles-model"
-            scale="0.00003032120668279684 0.00003032120668279684 0.00003032120668279684"
+            scale="0.00003 0.00003 0.00003"
             animation-mixer="loop: repeat"
             gltf-model="#knuckles-asset"
             look-at="#camera"
-            clickable="https://www.youtube.com/watch?v=VcRz9EMC-Y0"
-    ></a-entity>
-
+            clickable="https://www.youtube.com/watch?v=VcRz9EMC-Y0">
+    </a-entity>
   </a-marker>
+
 
   <a-marker
           id="goat-marker"
@@ -91,34 +86,40 @@
           preset="custom"
           url="assets/goat/goat-marker.patt"
           emitevents="true"
-          clickable="https://fha2713.github.io/Motion/GOAT.mp4"
+          clickable="https://fha2713.github.io/Motion/GOAT.mp4">
 
-  >
     <a-entity
             id="goat-model"
             scale="1 1 1"
             animation-mixer="loop: repeat"
             gltf-model="#goat-asset"
-            clickable="https://fha2713.github.io/Motion/GOAT.mp4"
-    ></a-entity>
+            clickable="https://fha2713.github.io/Motion/GOAT.mp4">
+    </a-entity>
   </a-marker>
+
 
   <a-entity id="camera" camera></a-entity>
 </a-scene>
 
-<div class="loader-wrapper"><div class="loader"></div></div>
+
+<div class="loader-wrapper">
+  <div class="loader"></div>
+</div>
+
+
 <svg
         xmlns="http://www.w3.org/2000/svg"
         width="32"
         height="32"
         fill="currentColor"
         viewBox="0 0 16 16"
-        id="fullScreenButton"
->
+        id="fullScreenButton">
+
   <path
           stroke="white"
-          d="M1.5 1a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 0h4a.5.5 0 0 1 0 1zM10 .5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5M.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5"
-  />
+          d="M1.5 1a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 0h4a.5.5 0 0 1 0 1zM10 .5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5M.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5">
+  </path>
 </svg>
+<script src="js/armaster.js"></script>
 </body>
 </html>
