@@ -15,7 +15,6 @@ nav {
   padding: 0.5rem 1rem;
 }
 
-
 .navBar {
   display: flex;
   justify-content: space-between;
@@ -60,6 +59,20 @@ nav {
   animation: spin 2s linear infinite;
 }
 
+@media (max-width: 600px) {
+  nav {
+    padding: 1rem;
+  }
+
+  .navHeader {
+    font-size: medium;
+  }
+
+  #fullScreenButton {
+    right: 0.5rem;
+    bottom: 0.5rem;
+  }
+}
 
 /* Safari */
 @-webkit-keyframes spin {
