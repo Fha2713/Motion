@@ -47,3 +47,26 @@ document.querySelector('#knuckles-marker').addEventListener('click', () => {
 document.querySelector('#goat-marker').addEventListener('click', () => {
   window.location.href = 'https://fha2713.github.io/Motion/GOAT.mp4';
 });
+
+
+document.getElementById('fullScreenButton').addEventListener('click', () => {
+  if (!document.fullscreenElement) {
+    // Enter fullscreen mode
+    document.documentElement.requestFullscreen().catch(err => {
+      console.error(`Error attempting to enable fullscreen mode: ${err.message} (${err.name})`);
+    });
+
+    // Adjust UI for fullscreen on mobile
+    document.getElementById('fullScreenButton').innerText = "⤴ Exit Fullscreen";
+    document.getElementById('fullScreenButton').style.fontSize = "14px";
+    document.getElementById('fullScreenButton').style.backgroundColor = "#ff4444";
+  } else {
+    // Exit fullscreen mode
+    document.exitFullscreen();
+
+    // Reset button appearance
+    document.getElementById('fullScreenButton').innerText = "⛶ Fullscreen";
+    document.getElementById('fullScreenButton').style.fontSize = "16px";
+    document.getElementById('fullScreenButton').style.backgroundColor = "#333";
+  }
+});
