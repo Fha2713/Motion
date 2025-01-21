@@ -1,5 +1,5 @@
 // Define constants
-const fullScreenDocument = document.documentElement;
+const fullScreenDocument = document.getElementById("scene"); // Target the scene specifically
 const navBar = document.querySelector("nav");
 const fullScreenButton = document.getElementById("fullScreenButton");
 
@@ -13,38 +13,41 @@ function fullscreenEnabled() {
 }
 
 function handleFullscreenChange() {
-  fullscreenEnabled()
-      ? (navBar.style.display = "none")
-      : (navBar.style.display = "block");
+  if (fullscreenEnabled()) {
+    navBar.style.display = "none";
+  } else {
+    navBar.style.display = "block";
+  }
+}
+
+function toggleFullscreen() {
+  if (fullscreenEnabled()) {
+    if (document.exitFullscreen) {
+      document.exitFullscreen().catch(err => console.error("Error exiting fullscreen:", err));
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
+    }
+  } else {
+    if (fullScreenDocument.requestFullscreen) {
+      fullScreenDocument.requestFullscreen().catch(err => console.error("Error entering fullscreen:", err));
+    } else if (fullScreenDocument.webkitRequestFullscreen) {
+      fullScreenDocument.webkitRequestFullscreen();
+    } else if (fullScreenDocument.msRequestFullscreen) {
+      fullScreenDocument.msRequestFullscreen();
+    }
+  }
 }
 
 if (fullScreenButton) {
-  fullScreenButton.addEventListener("click", () => {
-    if (fullscreenEnabled()) {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen();
-      } else if (document.msExitFullscreen) {
-        document.msExitFullscreen();
-      }
-    } else {
-      if (fullScreenDocument.requestFullscreen) {
-        fullScreenDocument.requestFullscreen();
-      } else if (fullScreenDocument.webkitRequestFullscreen) {
-        /* Safari */
-        fullScreenDocument.webkitRequestFullscreen();
-      } else if (fullScreenDocument.msRequestFullscreen) {
-        /* IE11 */
-        fullScreenDocument.msRequestFullscreen();
-      }
-    }
-  });
+  fullScreenButton.addEventListener("click", toggleFullscreen);
 }
 
+// Add event listeners for fullscreen changes
 document.addEventListener("fullscreenchange", handleFullscreenChange);
-document.addEventListener("mozfullscreenchange", handleFullscreenChange);
 document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
+document.addEventListener("mozfullscreenchange", handleFullscreenChange);
 document.addEventListener("msfullscreenchange", handleFullscreenChange);
 
 // A-Frame Components
