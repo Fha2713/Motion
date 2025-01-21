@@ -47,3 +47,20 @@ document.querySelector('#knuckles-marker').addEventListener('click', () => {
 document.querySelector('#goat-marker').addEventListener('click', () => {
   window.location.href = 'https://fha2713.github.io/Motion/GOAT.mp4';
 });
+
+
+document.getElementById('fullScreenButton').addEventListener('click', () => {
+  const scene = document.getElementById('view');
+
+  if (!document.fullscreenElement) {
+    // Enter fullscreen
+    scene.requestFullscreen()
+        .then(() => console.log('Fullscreen mode activated'))
+        .catch(err => console.error(`Failed to enable fullscreen: ${err.message}`));
+  } else {
+    // Exit fullscreen
+    document.exitFullscreen()
+        .then(() => console.log('Fullscreen mode deactivated'))
+        .catch(err => console.error(`Failed to exit fullscreen: ${err.message}`));
+  }
+});
