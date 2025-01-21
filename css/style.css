@@ -15,6 +15,12 @@ nav {
   padding: 0.5rem 1rem;
 }
 
+#scene {
+  width: 100vw;
+  height: 100vh;
+}
+
+
 .navBar {
   display: flex;
   justify-content: space-between;
